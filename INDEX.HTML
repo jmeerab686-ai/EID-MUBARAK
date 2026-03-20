@@ -1,0 +1,868 @@
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eid ul-Fitr Wishes • Share Joy & Blessings</title>
+    <meta name="description" content="Create beautiful Eid ul-Fitr greeting cards, share heartfelt wishes, and celebrate with animations, lanterns, confetti and more." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'ui-sans-serif', 'system-ui'],
+                        arabic: ['Amiri', 'serif']
+                    },
+                    colors: {
+                        eid: {
+                            50: '#f4fbf7',
+                            100: '#dff5e9',
+                            200: '#bde9d1',
+                            300: '#93d9b6',
+                            400: '#64c497',
+                            500: '#3dad79',
+                            600: '#2c8e61',
+                            700: '#26734f',
+                            800: '#215b40',
+                            900: '#1c4b36',
+                        },
+                        gold: '#d4af37'
+                    },
+                    boxShadow: {
+                        glow: '0 0 40px rgba(212, 175, 55, 0.45)'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-16px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' }
+                        },
+                        twinkle: {
+                            '0%, 100%': { opacity: 0.2, transform: 'scale(0.9)' },
+                            '50%': { opacity: 1, transform: 'scale(1.1)' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 6s ease-in-out infinite',
+                        shimmer: 'shimmer 2.5s linear infinite',
+                        twinkle: 'twinkle 2.2s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom aesthetics */
+        .bg-eid-gradient {
+            background: radial-gradient(1200px 600px at 80% -10%, rgba(212,175,55,0.25), transparent),
+                        radial-gradient(1000px 500px at -10% 10%, rgba(61,173,121,0.2), transparent),
+                        linear-gradient(180deg, #07130e 0%, #0b1f18 30%, #0b1a15 100%);
+        }
+        .glass {
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .gold-gradient {
+            background: linear-gradient(90deg, #f9e9a8, #d4af37, #f9e9a8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 100%;
+        }
+        .arabic {
+            font-family: 'Amiri', serif;
+        }
+        /* Lantern glow */
+        .lantern {
+            filter: drop-shadow(0 8px 30px rgba(212,175,55,0.35));
+        }
+        /* Hide scrollbar for card choices */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Card export area */
+        #cardPreview {
+            background-image:
+              radial-gradient(600px 300px at 90% -20%, rgba(212,175,55,0.25), transparent),
+              radial-gradient(600px 300px at -10% 10%, rgba(61,173,121,0.18), transparent);
+        }
+        /* Print style for download fallback */
+        @media print {
+            body * { visibility: hidden; }
+            #cardPreview, #cardPreview * { visibility: visible; }
+            #cardPreview { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body class="bg-eid-gradient text-white antialiased selection:bg-eid-700 selection:text-white">
+    <!-- Background Stars -->
+    <canvas id="stars" class="fixed inset-0 -z-10"></canvas>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40">
+        <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mt-4 mb-3 flex items-center justify-between glass rounded-2xl px-4 py-3 shadow-glow">
+                <a href="#home" class="flex items-center gap-3">
+                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-eid-400 to-eid-700 shadow-glow">
+                        <!-- Crescent icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M21 15.5A9 9 0 1 1 12.5 3a7 7 0 1 0 8.5 12.5z"/></svg>
+                    </span>
+                    <span class="text-lg font-extrabold tracking-wide">Eid <span class="gold-gradient animate-shimmer">Mubarak</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-6 text-sm">
+                    <a href="#wishes" class="opacity-80 hover:opacity-100">Wishes</a>
+                    <a href="#generator" class="opacity-80 hover:opacity-100">Create Card</a>
+                    <a href="#gallery" class="opacity-80 hover:opacity-100">Gallery</a>
+                    <a href="#duas" class="opacity-80 hover:opacity-100">Duas</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="toggleTheme" aria-label="Toggle theme" class="inline-flex h-9 w-9 items-center justify-center rounded-xl glass hover:shadow-glow transition">
+                        <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zM20.24 4.84l1.79-1.79-1.79-1.79-1.8 1.79 1.8 1.79zM23 11v2h-3v-2h3zM12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
+                        <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15.5A9 9 0 1 1 12.5 3a7 7 0 1 0 8.5 12.5z"/></svg>
+                    </button>
+                    <a href="#generator" class="hidden sm:inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold bg-gradient-to-r from-eid-500 to-eid-700 hover:to-eid-600 shadow-glow transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+                        Create Wish
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="relative overflow-hidden">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-16 md:pt-16 md:pb-28">
+            <div class="grid lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <p class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs tracking-wide uppercase glass">
+                        <span class="inline-block h-2 w-2 rounded-full bg-eid-400 animate-pulse"></span>
+                        عيد الفطر المبارك
+                    </p>
+                    <h1 class="mt-5 text-4xl md:text-6xl font-extrabold leading-tight">
+                        Share the Joy of <span class="gold-gradient animate-shimmer">Eid ul-Fitr</span>
+                        <span class="block text-2xl md:text-3xl font-semibold mt-3 text-white/80">Send heartfelt wishes to your loved ones.</span>
+                    </h1>
+                    <p class="mt-5 text-white/80 max-w-xl">Celebrate the end of Ramadan with beautiful cards, ready-made messages, and festive animations. Create a personalized greeting in seconds and share it anywhere.</p>
+                    <div class="mt-7 flex flex-wrap items-center gap-3">
+                        <a href="#generator" class="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold bg-gradient-to-r from-eid-500 to-eid-700 hover:to-eid-600 shadow-glow transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.39 6.76H21l-5.19 3.77L17.2 20 12 15.9 6.8 20l1.39-7.47L3 8.76h6.61z"/></svg>
+                            Create Your Card
+                        </a>
+                        <button id="celebrateBtn" class="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold glass hover:shadow-glow transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h2v2H5V3zm12 0h2v2h-2V3zM5 19h2v2H5v-2zm12 0h2v2h-2v-2zM9 7h6v10H9z"/></svg>
+                            Celebrate Now
+                        </button>
+                    </div>
+                    <!-- Countdown -->
+                    <div class="mt-10 grid grid-cols-4 gap-3 max-w-lg">
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div id="cd-days" class="text-3xl font-extrabold">00</div>
+                            <div class="text-xs uppercase tracking-wider text-white/70">Days</div>
+                        </div>
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div id="cd-hours" class="text-3xl font-extrabold">00</div>
+                            <div class="text-xs uppercase tracking-wider text-white/70">Hours</div>
+                        </div>
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div id="cd-mins" class="text-3xl font-extrabold">00</div>
+                            <div class="text-xs uppercase tracking-wider text-white/70">Minutes</div>
+                        </div>
+                        <div class="glass rounded-2xl p-4 text-center">
+                            <div id="cd-secs" class="text-3xl font-extrabold">00</div>
+                            <div class="text-xs uppercase tracking-wider text-white/70">Seconds</div>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-xs text-white/60">Countdown to Eid ul-Fitr (~31 March 2025). Date may vary by moon sighting.</p>
+                </div>
+                <div class="relative">
+                    <!-- Floating lanterns and moon -->
+                    <div class="relative mx-auto aspect-square w-[88%] max-w-[520px]">
+                        <div class="absolute inset-0 rounded-[2.5rem] glass"></div>
+                        <svg class="absolute -top-6 -right-6 w-24 h-24 opacity-70" viewBox="0 0 100 100" fill="none">
+                            <path d="M70 20A40 40 0 1 1 30 20A30 30 0 1 0 70 20Z" fill="url(#g)" />
+                            <defs>
+                                <linearGradient id="g" x1="0" y1="0" x2="100" y2="100">
+                                    <stop stop-color="#f9e9a8"/><stop offset="1" stop-color="#d4af37"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="relative">
+                                <div class="absolute -top-10 -left-10 h-20 w-20 rounded-full bg-eid-500/20 blur-2xl"></div>
+                                <svg width="260" height="260" viewBox="0 0 260 260" class="lantern animate-float">
+                                    <defs>
+                                        <radialGradient id="lg" cx="50%" cy="30%" r="70%">
+                                            <stop offset="0%" stop-color="#FFF7D1"/>
+                                            <stop offset="40%" stop-color="#F3D774"/>
+                                            <stop offset="100%" stop-color="#D4AF37"/>
+                                        </radialGradient>
+                                        <linearGradient id="glint" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0%" stop-color="rgba(255,255,255,.9)"/>
+                                            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M130 10 C90 10 60 40 60 80 L60 170 C60 200 90 230 130 230 C170 230 200 200 200 170 L200 80 C200 40 170 10 130 10 Z" fill="url(#lg)" stroke="#b9972e" stroke-width="4"/>
+                                    <path d="M80 55 L120 30 L160 60" stroke="url(#glint)" stroke-width="6" stroke-linecap="round"/>
+                                    <rect x="115" y="0" width="30" height="20" rx="5" fill="#7a5b12"/>
+                                    <rect x="118" y="220" width="24" height="20" rx="5" fill="#7a5b12"/>
+                                    <g opacity="0.25">
+                                        <path d="M90 100 H170" stroke="#7a5b12" stroke-width="3" />
+                                        <path d="M90 140 H170" stroke="#7a5b12" stroke-width="3" />
+                                    </g>
+                                </svg>
+                                <div class="absolute -right-12 -bottom-10">
+                                    <svg width="160" height="160" viewBox="0 0 260 260" class="lantern animate-float" style="animation-delay: -2s;">
+                                        <use href="#"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mosque silhouette -->
+                        <svg class="absolute bottom-0 left-0 right-0 w-full opacity-60" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                            <path fill="rgba(255,255,255,0.06)" d="M0,224L80,213.3C160,203,320,181,480,181.3C640,181,800,203,960,213.3C1120,224,1280,224,1360,224L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+                            <path fill="rgba(255,255,255,0.08)" d="M0,256L80,245.3C160,235,320,213,480,208C640,203,800,213,960,229.3C1120,245,1280,267,1360,277.3L1440,288L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative sparkles -->
+        <div class="pointer-events-none absolute inset-0">
+            <span class="absolute left-10 top-20 h-2 w-2 rounded-full bg-gold animate-twinkle"></span>
+            <span class="absolute right-16 top-40 h-1.5 w-1.5 rounded-full bg-gold animate-twinkle" style="animation-delay: .6s"></span>
+            <span class="absolute left-1/3 bottom-10 h-2 w-2 rounded-full bg-gold animate-twinkle" style="animation-delay: 1.2s"></span>
+        </div>
+    </section>
+
+    <!-- Quick wishes -->
+    <section id="wishes" class="relative py-12 md:py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-extrabold">Beautiful Eid Wishes</h2>
+                    <p class="text-white/70 mt-2">Copy a message or send directly in your card.</p>
+                </div>
+                <button id="surpriseWish" class="hidden sm:inline-flex items-center gap-2 rounded-xl px-4 py-2 glass hover:shadow-glow transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.39 6.76H21l-5.19 3.77L17.2 20 12 15.9 6.8 20l1.39-7.47L3 8.76h6.61z"/></svg>
+                    Surprise me
+                </button>
+            </div>
+            <div id="wishGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </div>
+    </section>
+
+    <!-- Generator -->
+    <section id="generator" class="relative py-12 md:py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <div class="glass rounded-3xl p-6 md:p-8">
+                    <h3 class="text-2xl md:text-3xl font-extrabold">Create Your Personalized Card</h3>
+                    <p class="text-white/70 mt-2">Type a name, pick a style, and download a high-quality greeting.</p>
+
+                    <form id="cardForm" class="mt-6 space-y-5">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <label class="block">
+                                <span class="text-sm text-white/80">Recipient Name</span>
+                                <input id="recipient" type="text" placeholder="e.g., Aisha" class="mt-1 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-eid-400 focus:ring-2 focus:ring-eid-500/30" />
+                            </label>
+                            <label class="block">
+                                <span class="text-sm text-white/80">From</span>
+                                <input id="sender" type="text" placeholder="e.g., Hamza" class="mt-1 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-eid-400 focus:ring-2 focus:ring-eid-500/30" />
+                            </label>
+                        </div>
+                        <label class="block">
+                            <span class="text-sm text-white/80">Message</span>
+                            <textarea id="message" rows="4" placeholder="Write your heartfelt wish..." class="mt-1 w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-eid-400 focus:ring-2 focus:ring-eid-500/30"></textarea>
+                            <div class="mt-2 flex flex-wrap gap-2" id="quickMessages"></div>
+                        </label>
+                        <div>
+                            <span class="text-sm text-white/80">Choose a style</span>
+                            <div id="styleChoices" class="mt-2 flex gap-3 overflow-x-auto no-scrollbar pb-2"></div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <button type="button" id="downloadCard" class="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold bg-gradient-to-r from-eid-500 to-eid-700 hover:to-eid-600 shadow-glow transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5 1.42 1.42L11 6.83V16h2V6.83l3.08 3.09 1.42-1.42L12 2z"/></svg>
+                                Download PNG
+                            </button>
+                            <button type="button" id="shareCard" class="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold glass hover:shadow-glow transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.02 3.02 0 000-1.39l7.05-4.11a2.99 2.99 0 101-1.73 3 3 0 00-.06.63L9.91 10.8a3 3 0 100 2.4l7.05 4.12c.53-.45 1.21-.72 1.96-.72a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                                Share
+                            </button>
+                            <button type="button" id="previewConfetti" class="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold glass hover:shadow-glow transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.39 6.76H21l-5.19 3.77L17.2 20 12 15.9 6.8 20l1.39-7.47L3 8.76h6.61z"/></svg>
+                                Preview Celebration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Preview -->
+                <div class="lg:sticky lg:top-24">
+                    <div id="cardPreviewWrap" class="relative">
+                        <div id="cardPreview" class="glass rounded-[2rem] overflow-hidden shadow-glow">
+                            <!-- Card Canvas -->
+                            <div id="cardCanvas" class="relative select-none">
+                                <div class="absolute inset-0">
+                                    <div id="cardBg" class="absolute inset-0"></div>
+                                    <svg class="absolute -right-10 -top-10 opacity-30" width="220" height="220" viewBox="0 0 100 100">
+                                        <path d="M70 20A40 40 0 1 1 30 20A30 30 0 1 0 70 20Z" fill="url(#g2)"/>
+                                        <defs>
+                                            <linearGradient id="g2" x1="0" y1="0" x2="100" y2="100">
+                                                <stop stop-color="#f9e9a8"/><stop offset="1" stop-color="#d4af37"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                    <svg class="absolute -left-12 -bottom-12 opacity-20" width="260" height="260" viewBox="0 0 260 260">
+                                        <path d="M130 10 C90 10 60 40 60 80 L60 170 C60 200 90 230 130 230 C170 230 200 200 200 170 L200 80 C200 40 170 10 130 10 Z" fill="url(#lg2)"/>
+                                        <defs>
+                                            <radialGradient id="lg2" cx="50%" cy="30%" r="70%">
+                                                <stop offset="0%" stop-color="#FFF7D1"/>
+                                                <stop offset="40%" stop-color="#F3D774"/>
+                                                <stop offset="100%" stop-color="#D4AF37"/>
+                                            </radialGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="relative p-8 md:p-12">
+                                    <div class="flex items-center justify-between">
+                                        <div class="arabic text-2xl md:text-3xl gold-gradient font-bold">عيد مبارك</div>
+                                        <div class="text-xs tracking-widest uppercase text-white/70">Eid ul-Fitr</div>
+                                    </div>
+                                    <div class="mt-8 md:mt-12">
+                                        <div class="text-sm uppercase tracking-widest text-white/70">Dear</div>
+                                        <div id="previewRecipient" class="text-3xl md:text-5xl font-extrabold mt-1">Your Loved One</div>
+                                    </div>
+                                    <div id="previewMessage" class="mt-6 md:mt-8 text-white/90 leading-relaxed text-lg md:text-xl max-w-2xl">
+                                        May this Eid bring endless joy, peace, and prosperity to you and your family. Eid Mubarak!
+                                    </div>
+                                    <div class="mt-8 md:mt-10 flex items-center justify-between">
+                                        <div class="text-white/80">
+                                            <div class="text-xs uppercase tracking-widest text-white/60">From</div>
+                                            <div id="previewSender" class="text-xl md:text-2xl font-bold">A Friend</div>
+                                        </div>
+                                        <div class="arabic text-xl md:text-2xl gold-gradient">تقبل الله منا ومنكم</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -z-10 blur-2xl opacity-40 -inset-6 bg-gradient-to-tr from-eid-600 via-transparent to-yellow-500 rounded-[3rem]"></div>
+                    </div>
+                    <p class="text-xs text-white/60 mt-3">Tip: Choose a style, edit text, then download. Works great on phones too!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="relative py-12 md:py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-extrabold">Eid Gallery</h2>
+                    <p class="text-white/70 mt-2">Festive patterns and warm lantern lights.</p>
+                </div>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- 6 decorative tiles -->
+                <div class="glass rounded-3xl overflow-hidden group">
+                    <div class="relative aspect-[4/3] bg-gradient-to-br from-eid-800 to-eid-900">
+                        <div class="absolute inset-0 opacity-30" style="background: radial-gradient(500px 200px at 80% -10%, rgba(212,175,55,.5), transparent)"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="180" height="180" viewBox="0 0 260 260" class="lantern group-hover:scale-105 transition duration-500">
+                                <path d="M130 10 C90 10 60 40 60 80 L60 170 C60 200 90 230 130 230 C170 230 200 200 200 170 L200 80 C200 40 170 10 130 10 Z" fill="url(#lg3)"/>
+                                <defs>
+                                    <radialGradient id="lg3" cx="50%" cy="30%" r="70%">
+                                        <stop offset="0%" stop-color="#FFF7D1"/>
+                                        <stop offset="40%" stop-color="#F3D774"/>
+                                        <stop offset="100%" stop-color="#D4AF37"/>
+                                    </radialGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-3xl overflow-hidden">
+                    <div class="relative aspect-[4/3] bg-gradient-to-tr from-[#2a1f0a] to-[#0e1a14]">
+                        <svg class="absolute -right-8 -top-8 opacity-40" width="220" height="220" viewBox="0 0 100 100">
+                            <path d="M70 20A40 40 0 1 1 30 20A30 30 0 1 0 70 20Z" fill="url(#g3)"/>
+                            <defs>
+                                <linearGradient id="g3" x1="0" y1="0" x2="100" y2="100">
+                                    <stop stop-color="#f9e9a8"/><stop offset="1" stop-color="#d4af37"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="arabic text-5xl gold-gradient font-bold">عيد سعيد</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-3xl overflow-hidden">
+                    <div class="relative aspect-[4/3] bg-gradient-to-bl from-eid-900 to-[#11261e]">
+                        <div class="absolute inset-0" style="background: radial-gradient(600px 220px at -10% 10%, rgba(61,173,121,.35), transparent)"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="220" height="120" viewBox="0 0 220 120">
+                                <defs>
+                                    <linearGradient id="mosq" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#34d399"/>
+                                        <stop offset="100%" stop-color="#a7f3d0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M10 90 H210 V100 H10 Z" fill="rgba(255,255,255,.08)"/>
+                                <path d="M40 90 V60 H60 V90 Z M90 90 V50 H110 V90 Z M140 90 V60 H160 V90 Z" fill="url(#mosq)"/>
+                                <circle cx="100" cy="45" r="12" fill="url(#mosq)"/>
+                                <path d="M94 45 L100 30 L106 45 Z" fill="url(#mosq)"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-3xl overflow-hidden">
+                    <div class="relative aspect-[4/3] bg-gradient-to-tl from-[#191307] to-[#0c1814] flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-extrabold">Eid <span class="gold-gradient animate-shimmer">Mubarak</span></div>
+                            <p class="mt-2 text-white/70">Taqabbal Allahu minna wa minkum</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-3xl overflow-hidden">
+                    <div class="relative aspect-[4/3] bg-gradient-to-br from-[#0f1a15] to-[#0b1210] flex items-center justify-center">
+                        <div class="grid grid-cols-5 gap-3 opacity-80">
+                            <span class="h-3 w-3 rounded-full bg-gold"></span>
+                            <span class="h-3 w-3 rounded-full bg-eid-400"></span>
+                            <span class="h-3 w-3 rounded-full bg-gold"></span>
+                            <span class="h-3 w-3 rounded-full bg-eid-400"></span>
+                            <span class="h-3 w-3 rounded-full bg-gold"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-3xl overflow-hidden">
+                    <div class="relative aspect-[4/3] bg-gradient-to-tr from-[#13241d] to-[#0b1512] flex items-center justify-center">
+                        <svg width="160" height="160" viewBox="0 0 100 100">
+                            <path d="M70 20A40 40 0 1 1 30 20A30 30 0 1 0 70 20Z" fill="url(#g4)"/>
+                            <defs>
+                                <linearGradient id="g4" x1="0" y1="0" x2="100" y2="100">
+                                    <stop stop-color="#f9e9a8"/><stop offset="1" stop-color="#d4af37"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Duas -->
+    <section id="duas" class="relative py-12 md:py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-extrabold">Eid Sunnahs & Duas</h2>
+                    <ul class="mt-6 space-y-4 text-white/85">
+                        <li class="glass rounded-2xl p-4">Take a bath (ghusl), wear your best clothes, apply perfume (for men).</li>
+                        <li class="glass rounded-2xl p-4">Eat something sweet (dates) before Eid prayer.</li>
+                        <li class="glass rounded-2xl p-4">Give Zakat al-Fitr before the prayer.</li>
+                        <li class="glass rounded-2xl p-4">Take different routes to and from the prayer place.</li>
+                        <li class="glass rounded-2xl p-4 arabic text-xl">تقبل الله منا ومنكم — “May Allah accept from us and from you.”</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-3xl p-6 md:p-8">
+                    <h3 class="text-xl md:text-2xl font-bold">Subscribe for a beautiful Eid reminder</h3>
+                    <p class="text-white/70 mt-1">Get a digital card and a thoughtful message each year.</p>
+                    <form id="subscribeForm" class="mt-5 flex flex-col sm:flex-row gap-3">
+                        <input type="email" required placeholder="you@email.com" class="flex-1 rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-eid-400 focus:ring-2 focus:ring-eid-500/30" />
+                        <button class="rounded-2xl px-5 py-3 font-semibold bg-gradient-to-r from-eid-500 to-eid-700 hover:to-eid-600 shadow-glow transition">Subscribe</button>
+                    </form>
+                    <p id="subscribeNote" class="text-xs text-white/60 mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-white/10">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-white/70 text-sm">© <span id="year"></span> Eid Wishes. Made with love & lanterns.</p>
+                <div class="flex items-center gap-3 text-white/70">
+                    <a href="#home" class="hover:text-white">Home</a>
+                    <span class="opacity-30">•</span>
+                    <a href="#generator" class="hover:text-white">Create</a>
+                    <span class="opacity-30">•</span>
+                    <a href="#gallery" class="hover:text-white">Gallery</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Share Modal -->
+    <dialog id="shareModal" class="rounded-3xl bg-transparent backdrop:bg-black/60">
+        <div class="glass rounded-3xl p-6 md:p-8 w-[92vw] max-w-lg">
+            <div class="flex items-start justify-between gap-6">
+                <div>
+                    <h4 class="text-2xl font-extrabold">Share your wish</h4>
+                    <p class="text-white/70 mt-1">Send this link to anyone, or copy the text.</p>
+                </div>
+                <button id="closeShare" class="rounded-xl glass px-3 py-2">Close</button>
+            </div>
+            <div class="mt-5">
+                <input id="shareUrl" class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none" readonly />
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <button data-copy="url" class="rounded-xl glass px-4 py-2">Copy Link</button>
+                    <button data-copy="text" class="rounded-xl glass px-4 py-2">Copy Text</button>
+                    <a id="waShare" target="_blank" class="rounded-xl glass px-4 py-2">WhatsApp</a>
+                    <a id="xShare" target="_blank" class="rounded-xl glass px-4 py-2">X/Twitter</a>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        // Utility: format with leading zero
+        const pad = n => String(n).padStart(2, '0');
+
+        // Theme toggle
+        const toggleTheme = document.getElementById('toggleTheme');
+        const iconSun = document.getElementById('iconSun');
+        const iconMoon = document.getElementById('iconMoon');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('eid-theme');
+        if (savedTheme === 'light') {
+            root.classList.add('light');
+            document.body.classList.remove('bg-eid-gradient');
+            document.body.classList.add('bg-gradient-to-b','from-[#f8faf8]','to-[#eef5f1]');
+            document.body.classList.add('text-slate-800');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        }
+        toggleTheme.addEventListener('click', () => {
+            const isLight = root.classList.toggle('light');
+            if (isLight) {
+                document.body.classList.remove('bg-eid-gradient','text-white');
+                document.body.classList.add('bg-gradient-to-b','from-[#f8faf8]','to-[#eef5f1]','text-slate-800');
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+                localStorage.setItem('eid-theme','light');
+            } else {
+                document.body.classList.add('bg-eid-gradient','text-white');
+                document.body.classList.remove('bg-gradient-to-b','from-[#f8faf8]','to-[#eef5f1]','text-slate-800');
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+                localStorage.setItem('eid-theme','dark');
+            }
+        });
+
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Countdown (set target date ~ 31 March 2025 00:00 local)
+        // NOTE: Eid date depends on moon sighting; change if needed.
+        const target = new Date('2025-03-31T00:00:00');
+        const els = {
+            d: document.getElementById('cd-days'),
+            h: document.getElementById('cd-hours'),
+            m: document.getElementById('cd-mins'),
+            s: document.getElementById('cd-secs'),
+        };
+        function tick() {
+            const now = new Date();
+            let diff = Math.max(0, target - now);
+            const s = Math.floor(diff / 1000);
+            const d = Math.floor(s / 86400);
+            const h = Math.floor((s % 86400) / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = s % 60;
+            els.d.textContent = pad(d);
+            els.h.textContent = pad(h);
+            els.m.textContent = pad(m);
+            els.s.textContent = pad(sec);
+        }
+        tick();
+        setInterval(tick, 1000);
+
+        // Stars background
+        const starCanvas = document.getElementById('stars');
+        const ctx = starCanvas.getContext('2d');
+        let stars = [];
+        function resizeCanvas() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+            stars = Array.from({length: Math.min(300, Math.floor(window.innerWidth * 0.15))}, () => ({
+                x: Math.random() * starCanvas.width,
+                y: Math.random() * starCanvas.height,
+                r: Math.random() * 1.2 + 0.2,
+                a: Math.random() * 0.8 + 0.2,
+                v: Math.random() * 0.3 + 0.05
+            }));
+        }
+        function drawStars() {
+            ctx.clearRect(0,0,starCanvas.width,starCanvas.height);
+            for (const s of stars) {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+                ctx.fill();
+                s.y += s.v;
+                if (s.y > starCanvas.height) { s.y = -5; s.x = Math.random() * starCanvas.width; }
+            }
+            requestAnimationFrame(drawStars);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); drawStars();
+
+        // Wishes dataset
+        const WISHES = [
+            "Eid Mubarak! May Allah accept your fasts, prayers, and good deeds.",
+            "Wishing you peace, happiness, and prosperity this Eid and always.",
+            "May your home be filled with warmth, laughter, and endless blessings.",
+            "Eid Mubarak! May this day bring joy to your heart and barakah to your home.",
+            "On this blessed occasion, may Allah’s mercy shine upon you and your family.",
+            "Sending you warm hugs and prayers this Eid. Have a beautiful day!",
+            "May your Eid be as sweet as the desserts on your table!",
+            "Eid Mubarak! Let’s cherish the memories and make many more.",
+            "May your sacrifices be appreciated and your prayers answered.",
+            "Wishing you a joyful Eid surrounded by loved ones.",
+            "Eid Mubarak! May your heart be light and your Iman strong.",
+            "May Allah bless you with health, wealth, and endless happiness."
+        ];
+
+        const wishGrid = document.getElementById('wishGrid');
+        function renderWishes() {
+            wishGrid.innerHTML = '';
+            WISHES.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'glass rounded-3xl p-5 md:p-6 hover:shadow-glow transition group';
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="text-lg md:text-xl leading-relaxed">${w}</div>
+                        <button class="shrink-0 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition inline-flex items-center gap-2 rounded-xl px-3 py-2 glass" data-copy>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 00-2 2v12h2V3h12V1zm3 4H8a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2zm0 16H8V7h11v14z"/></svg>
+                            Copy
+                        </button>
+                    </div>
+                    <div class="mt-4 flex items-center gap-2 text-xs text-white/60">
+                        <span class="inline-block h-2 w-2 rounded-full bg-gold"></span> Eid ul-Fitr
+                    </div>
+                `;
+                card.querySelector('[data-copy]').addEventListener('click', () => {
+                    navigator.clipboard.writeText(w).then(() => {
+                        toast('Copied to clipboard!');
+                    });
+                });
+                wishGrid.appendChild(card);
+            });
+        }
+        renderWishes();
+
+        // Surprise wish
+        document.getElementById('surpriseWish').addEventListener('click', () => {
+            const w = WISHES[Math.floor(Math.random() * WISHES.length)];
+            document.getElementById('message').value = w;
+            document.getElementById('previewMessage').textContent = w;
+            toast('A sweet wish added!');
+        });
+
+        // Quick messages chips
+        const quickMessages = document.getElementById('quickMessages');
+        WISHES.slice(0,6).forEach(w => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'text-xs rounded-full px-3 py-1 glass hover:shadow-glow transition';
+            btn.textContent = w.slice(0, 28) + '…';
+            btn.title = w;
+            btn.addEventListener('click', () => {
+                document.getElementById('message').value = w;
+                document.getElementById('previewMessage').textContent = w;
+            });
+            quickMessages.appendChild(btn);
+        });
+
+        // Styles for card
+        const STYLES = [
+            { id: 'emerald', name: 'Emerald', bg: 'linear-gradient(135deg, #0b1f18, #0f2f24 60%, #123a2c)' },
+            { id: 'midnight', name: 'Midnight', bg: 'linear-gradient(135deg, #0a0f14, #0b1620 60%, #0c1e2c)' },
+            { id: 'royal', name: 'Royal Gold', bg: 'radial-gradient(800px 400px at 80% -10%, rgba(212,175,55,.25), transparent), linear-gradient(135deg, #0e1512, #0f1f18)' },
+            { id: 'teal', name: 'Teal Glow', bg: 'linear-gradient(135deg, #07302a, #0b4037 60%, #0d5247)' },
+            { id: 'arctic', name: 'Arctic', bg: 'linear-gradient(135deg, #0c1a16, #12231e 60%, #0f2c24)' },
+        ];
+        let currentStyle = STYLES[2];
+        const styleChoices = document.getElementById('styleChoices');
+        const cardBg = document.getElementById('cardBg');
+        function applyStyle(style) {
+            currentStyle = style;
+            cardBg.style.background = style.bg;
+            document.querySelectorAll('[data-style]').forEach(el => el.classList.remove('ring-2','ring-gold'));
+            const active = document.querySelector(`[data-style="${style.id}"]`);
+            if (active) active.classList.add('ring-2','ring-gold');
+        }
+        STYLES.forEach(s => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.dataset.style = s.id;
+            btn.className = 'group relative h-16 w-28 shrink-0 rounded-2xl overflow-hidden glass';
+            btn.innerHTML = `<div class="absolute inset-0" style="background:${s.bg}"></div>
+                             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
+                             <div class="absolute bottom-1 left-2 text-[11px] bg-black/50 px-2 py-0.5 rounded-full">${s.name}</div>`;
+            btn.addEventListener('click', () => applyStyle(s));
+            styleChoices.appendChild(btn);
+        });
+        applyStyle(currentStyle);
+
+        // Bind inputs to preview + URL params share
+        const recipient = document.getElementById('recipient');
+        const sender = document.getElementById('sender');
+        const message = document.getElementById('message');
+        const previewRecipient = document.getElementById('previewRecipient');
+        const previewSender = document.getElementById('previewSender');
+        const previewMessage = document.getElementById('previewMessage');
+
+        function updatePreviewFromInputs() {
+            previewRecipient.textContent = recipient.value.trim() || 'Your Loved One';
+            previewSender.textContent = sender.value.trim() || 'A Friend';
+            previewMessage.textContent = message.value.trim() || 'May this Eid bring endless joy, peace, and prosperity to you and your family. Eid Mubarak!';
+            syncUrlParams();
+        }
+        recipient.addEventListener('input', updatePreviewFromInputs);
+        sender.addEventListener('input', updatePreviewFromInputs);
+        message.addEventListener('input', updatePreviewFromInputs);
+
+        // Download card as PNG using html2canvas
+        document.getElementById('downloadCard').addEventListener('click', async () => {
+            celebrate(0.5);
+            const node = document.getElementById('cardPreview');
+            const canvas = await html2canvas(node, {backgroundColor: null, scale: 2, useCORS: true});
+            const link = document.createElement('a');
+            link.download = `Eid-Mubarak-${(recipient.value || 'Friend').replace(/\s+/g,'_')}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+
+        // Confetti
+        function celebrate(power=0.8) {
+            const duration = 1200;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({particleCount: 5, startVelocity: 35, spread: 70, origin: { x: Math.random(), y: Math.random() * 0.3 }, scalar: power});
+                if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+        }
+        document.getElementById('celebrateBtn').addEventListener('click', () => celebrate(1));
+        document.getElementById('previewConfetti').addEventListener('click', () => celebrate(1));
+
+        // Share modal
+        const shareModal = document.getElementById('shareModal');
+        const shareUrlInput = document.getElementById('shareUrl');
+        const waShare = document.getElementById('waShare');
+        const xShare = document.getElementById('xShare');
+        document.getElementById('shareCard').addEventListener('click', () => {
+            shareModal.showModal();
+            updateShareLinks();
+        });
+        document.getElementById('closeShare').addEventListener('click', () => shareModal.close());
+
+        function buildShareUrl() {
+            const url = new URL(window.location.href);
+            url.hash = '#generator';
+            url.searchParams.set('to', recipient.value.trim());
+            url.searchParams.set('from', sender.value.trim());
+            url.searchParams.set('msg', message.value.trim());
+            url.searchParams.set('style', currentStyle.id);
+            return url.toString();
+        }
+        function updateShareLinks() {
+            const u = buildShareUrl();
+            shareUrlInput.value = u;
+            const text = `Eid Mubarak ${recipient.value || 'Friend'}! ${message.value || 'Wishing you joy and blessings.'} — ${sender.value || 'A Friend'}`;
+            waShare.href = `https://wa.me/?text=${encodeURIComponent(text + ' ' + u)}`;
+            xShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(u)}`;
+        }
+        document.querySelectorAll('[data-copy]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const type = e.currentTarget.getAttribute('data-copy');
+                if (type === 'url') {
+                    navigator.clipboard.writeText(shareUrlInput.value).then(() => toast('Link copied!'));
+                } else {
+                    const text = `Eid Mubarak ${recipient.value || 'Friend'}! ${message.value || 'Wishing you joy and blessings.'} — ${sender.value || 'A Friend'}`;
+                    navigator.clipboard.writeText(text).then(() => toast('Message copied!'));
+                }
+            });
+        });
+
+        // Sync URL params with state (debounced)
+        let syncTimer;
+        function syncUrlParams() {
+            clearTimeout(syncTimer);
+            syncTimer = setTimeout(() => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('to', recipient.value.trim());
+                url.searchParams.set('from', sender.value.trim());
+                url.searchParams.set('msg', message.value.trim());
+                url.searchParams.set('style', currentStyle.id);
+                history.replaceState(null, '', url.toString());
+                updateShareLinks();
+            }, 200);
+        }
+
+        // Load from URL params on startup
+        (function loadFromParams(){
+            const params = new URLSearchParams(window.location.search);
+            const to = params.get('to'); const from = params.get('from'); const msg = params.get('msg'); const style = params.get('style');
+            if (to) recipient.value = to;
+            if (from) sender.value = from;
+            if (msg) message.value = msg;
+            updatePreviewFromInputs();
+            if (style) {
+                const s = STYLES.find(x => x.id === style);
+                if (s) applyStyle(s);
+            }
+        })();
+
+        // Subscribe (fake)
+        document.getElementById('subscribeForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value.trim();
+            if (!email) return;
+            localStorage.setItem('eid-sub', email);
+            document.getElementById('subscribeNote').textContent = 'Subscribed! You will receive Eid reminders, inshaAllah.';
+            toast('Subscribed — JazakAllah!');
+            e.target.reset();
+        });
+
+        // Tiny toast
+        function toast(text) {
+            const t = document.createElement('div');
+            t.textContent = text;
+            t.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl glass shadow-glow z-50';
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity='0'; t.style.transform='translate(-50%, 10px)'; }, 1200);
+            setTimeout(() => t.remove(), 1600);
+        }
+
+        // Accessibility: press "C" to celebrate
+        window.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'c') celebrate(1);
+        });
+
+        // Initialize preview text according to defaults
+        updatePreviewFromInputs();
+
+        // Add subtle parallax lanterns with mouse
+        const hero = document.getElementById('home');
+        hero.addEventListener('mousemove', (e) => {
+            const {innerWidth:w, innerHeight:h} = window;
+            const dx = (e.clientX - w/2) / w;
+            const dy = (e.clientY - h/2) / h;
+            document.querySelectorAll('.lantern').forEach((el, i) => {
+                el.style.transform = `translate(${dx*10*(i+1)}px, ${dy*10*(i+1)}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
